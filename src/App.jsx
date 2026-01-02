@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 import SettingsModal from "./components/SettingsModal";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { useResizable } from "./hooks/useResizable";
-import "./App.css";
+import "./styles/App.css";
 
 const INITIAL_FILE = {
   id: uuidv4(),
