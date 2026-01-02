@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import SettingsModal from "./components/SettingsModal";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { useResizable } from "./hooks/useResizable";
+import { useScrollSync } from "./hooks/useScrollSync";
 import "./styles/App.css";
 
 const INITIAL_FILE = {
@@ -24,6 +25,8 @@ const DEFAULT_SETTINGS = {
   autoSave: true,
   smoothAnimations: true,
   showFooter: true,
+  showLineNumbers: true,
+  scrollSync: true,
 };
 
 function App() {
@@ -54,6 +57,11 @@ function App() {
   } = useResizable(isPreviewMode);
 
   // --- EFFECTS ---
+  // --- REFS ---
+  const editorRef = React.useRef(null);
+  const previewRef = React.useRef(null);
+
+  useScrollSync(editorRef, previewRef, settings.scrollSync);
 
   // Theme application
   useEffect(() => {
@@ -163,8 +171,11 @@ function App() {
               }}
             >
               <MarkdownEditor
+                ref={editorRef}
                 content={activeFile.content}
                 onChange={handleUpdateContent}
+                theme={theme}
+                settings={settings}
               />
             </div>
 
@@ -181,6 +192,7 @@ function App() {
               }}
             >
               <MarkdownPreview
+                ref={previewRef}
                 content={activeFile.content}
                 settings={settings}
               />

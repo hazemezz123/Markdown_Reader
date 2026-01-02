@@ -163,6 +163,39 @@ const SettingsModal = ({
 
           {/* --- Toggles Section --- */}
           <section className="settings-section">
+            <h3>Editor</h3>
+
+            <div
+              className="toggle-row"
+              onClick={() =>
+                onUpdateSettings("showLineNumbers", !settings.showLineNumbers)
+              }
+            >
+              <span>Line Numbers</span>
+              {settings.showLineNumbers ? (
+                <ToggleRight className="toggle-on" />
+              ) : (
+                <ToggleLeft className="toggle-off" />
+              )}
+            </div>
+
+            <div
+              className="toggle-row"
+              onClick={() =>
+                onUpdateSettings("scrollSync", !settings.scrollSync)
+              }
+            >
+              <span>Scroll Sync</span>
+              {settings.scrollSync ? (
+                <ToggleRight className="toggle-on" />
+              ) : (
+                <ToggleLeft className="toggle-off" />
+              )}
+            </div>
+          </section>
+
+          {/* --- Interface Section --- */}
+          <section className="settings-section">
             <h3>Interface</h3>
 
             <div
