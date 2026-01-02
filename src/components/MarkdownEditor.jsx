@@ -32,4 +32,4 @@ const MarkdownEditor = ({ content, onChange }) => {
   );
 };
 
-export default MarkdownEditor;
+export default React.memo(MarkdownEditor);

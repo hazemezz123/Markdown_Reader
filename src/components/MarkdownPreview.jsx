@@ -1,7 +1,20 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 
-const MarkdownPreview = ({ content }) => {
+const MarkdownPreview = ({ content, settings = {} }) => {
+  const { fontSize = 16, lineHeight = "1.7", fontFamily = "sans" } = settings;
+
+  const getFontFamily = (f) => {
+    switch (f) {
+      case "serif":
+        return "serif";
+      case "mono":
+        return "monospace";
+      default:
+        return "var(--font-sans)";
+    }
+  };
+
   return (
     <div className="preview-container">
       <div className="markdown-content">
@@ -15,8 +28,9 @@ const MarkdownPreview = ({ content }) => {
           border-left: 1px solid var(--color-border);
         }
         .markdown-content {
-          font-family: var(--font-sans);
-          line-height: 1.7;
+          font-family: ${getFontFamily(fontFamily)};
+          line-height: ${lineHeight};
+          font-size: ${fontSize}px;
           max-width: 800px;
           margin: 0 auto;
         }
@@ -95,4 +109,4 @@ const MarkdownPreview = ({ content }) => {
   );
 };
 
-export default MarkdownPreview;
+export default React.memo(MarkdownPreview);
