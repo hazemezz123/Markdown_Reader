@@ -17,6 +17,7 @@ const MarkdownEditor = React.forwardRef(
     // Map app themes to CodeMirror themes
     const getThemeExtension = (themeId) => {
       switch (themeId) {
+        case "github-dark":
         case "dark":
           return githubDark;
         case "dracula":
@@ -25,6 +26,7 @@ const MarkdownEditor = React.forwardRef(
           return solarizedLight;
         case "solarized-dark":
           return solarizedDark;
+        case "github-light":
         case "light":
         default:
           return githubLight;
@@ -47,13 +49,14 @@ const MarkdownEditor = React.forwardRef(
       <div className="editor-container" ref={ref}>
         <CodeMirror
           value={content}
+          height="100%"
           theme={getThemeExtension(theme)}
           extensions={[
             markdown({ base: markdownLanguage, codeLanguages: languages }),
           ]}
           onChange={(value) => onChange(value)}
           basicSetup={{
-            lineNumbers: showLineNumbers,
+            lineNumbers: true,
             foldGutter: false,
             highlightActiveLine: true,
             autocompletion: true,
@@ -61,7 +64,6 @@ const MarkdownEditor = React.forwardRef(
           style={{
             fontSize: `${fontSize}px`,
             fontFamily: getFontFamily(fontFamily),
-            height: "100%",
           }}
           className="codemirror-wrapper"
         />
@@ -83,6 +85,11 @@ const MarkdownEditor = React.forwardRef(
         .cm-scroller {
             overflow: auto !important;
             padding: 2rem 0; /* Add top/bottom padding for comfort */
+        }
+        .cm-gutters {
+            background-color: var(--color-bg) !important;
+            border-right: none !important;
+            color: var(--color-text);
         }
         .cm-content {
              padding: 0 2rem; /* Add side padding */

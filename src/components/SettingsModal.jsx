@@ -15,9 +15,8 @@ import {
 import "../styles/SettingsModal.css";
 
 const THEMES = [
-  { id: "light", name: "Light", Icon: Sun },
-  { id: "dark", name: "Dark", Icon: Moon },
-  { id: "github", name: "GitHub", Icon: Github },
+  { id: "github-light", name: "GitHub Light", Icon: Github },
+  { id: "github-dark", name: "GitHub Dark", Icon: Github },
   { id: "dracula", name: "Dracula", Icon: Ghost },
   { id: "solarized-light", name: "Solarized Light", Icon: Sunrise },
   { id: "solarized-dark", name: "Solarized Dark", Icon: Sunset },
