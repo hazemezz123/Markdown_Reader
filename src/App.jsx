@@ -98,6 +98,25 @@ function App() {
     if (activeFileId === id) setActiveFileId(null);
   };
 
+  const handleDownloadFile = (id) => {
+    const file = files.find((f) => f.id === id);
+    if (!file) return;
+
+    const blob = new Blob([file.content ?? ""], {
+      type: "text/markdown;charset=utf-8",
+    });
+    const url = window.URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    const fileName = file.name.endsWith(".md") ? file.name : `${file.name}.md`;
+
+    anchor.href = url;
+    anchor.download = fileName;
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+    window.URL.revokeObjectURL(url);
+  };
+
   const handleRenameFile = (id, n) =>
     setFiles(files.map((f) => (f.id === id ? { ...f, name: n } : f)));
   const handleUpdateContent = (c) =>
@@ -121,6 +140,7 @@ function App() {
           onNewFile={handleNewFile}
           onRenameFile={handleRenameFile}
           onDeleteFile={handleDeleteFile}
+          onDownloadFile={handleDownloadFile}
         />
       </div>
 

@@ -14,6 +14,9 @@
   --color-active: #0969da;
   --color-active-text: #ffffff;
   --sidebar-bg: #f6f8fa;
+  --color-muted-text: #57606a;
+  --color-surface: #f6f8fa;
+  --color-surface-border: #d8dee4;
 }
 
 /* GitHub Dark */
@@ -26,6 +29,9 @@
   --color-active: #58a6ff;
   --color-active-text: #ffffff;
   --sidebar-bg: #010409;
+  --color-muted-text: #8b949e;
+  --color-surface: #161b22;
+  --color-surface-border: #30363d;
 }
 
 /* Dracula Theme */
@@ -37,6 +43,9 @@
   --color-active: #bd93f9;
   --color-active-text: #282a36;
   --sidebar-bg: #21222c;
+  --color-muted-text: #bdc1cc;
+  --color-surface: #323545;
+  --color-surface-border: #4b4f66;
 }
 
 /* Solarized Light */
@@ -48,6 +57,9 @@
   --color-active: #268bd2;
   --color-active-text: #fdf6e3;
   --sidebar-bg: #eee8d5;
+  --color-muted-text: #586e75;
+  --color-surface: #eee8d5;
+  --color-surface-border: #93a1a1;
 }
 
 /* Solarized Dark */
@@ -59,6 +71,9 @@
   --color-active: #268bd2;
   --color-active-text: #93a1a1;
   --sidebar-bg: #073642;
+  --color-muted-text: #93a1a1;
+  --color-surface: #073642;
+  --color-surface-border: #586e75;
 }
 
 * {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FileText, Plus, Trash2, Edit2, Check, X } from "lucide-react";
+import { FileText, Plus, Trash2, Edit2, Check, X, Download } from "lucide-react";
 import "../styles/Sidebar.css";
 
 const Sidebar = ({
@@ -9,6 +9,7 @@ const Sidebar = ({
   onNewFile,
   onRenameFile,
   onDeleteFile,
+  onDownloadFile,
 }) => {
   const [editingFileId, setEditingFileId] = useState(null);
   const [editName, setEditName] = useState("");
@@ -87,6 +88,16 @@ const Sidebar = ({
               <div className="file-info">
                 <span className="file-name">{file.name}</span>
                 <div className="file-actions">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDownloadFile(file.id);
+                    }}
+                    className="action-btn download"
+                    aria-label="Download"
+                  >
+                    <Download size={14} />
+                  </button>
                   <button
                     onClick={(e) => handleStartRename(e, file)}
                     className="action-btn rename"

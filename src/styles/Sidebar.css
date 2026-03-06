@@ -80,13 +80,15 @@
 .action-btn {
   padding: 4px;
   border-radius: 4px;
+  color: var(--color-text);
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 .action-btn:hover {
-  background-color: #e0e0e0;
+  background-color: var(--color-hover);
 }
 .action-btn.delete:hover {
   color: #d00;
-  background-color: transparent;
+  background-color: var(--color-hover);
 }
 .rename-input-wrapper {
   flex: 1;
