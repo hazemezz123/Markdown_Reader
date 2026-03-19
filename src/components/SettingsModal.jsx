@@ -34,10 +34,17 @@ const LINE_HEIGHTS = [
   { id: "2.0", name: "Relaxed" },
 ];
 
+const DIRECTIONS = [
+  { id: "auto", name: "Auto (Detect from content)" },
+  { id: "ltr", name: "Left to Right (LTR)" },
+  { id: "rtl", name: "Right to Left (RTL)" },
+];
+
 const SettingsModal = ({
   isOpen,
   onClose,
   settings,
+  direction = "ltr",
   onUpdateSettings,
   currentTheme,
   onThemeChange,
@@ -54,7 +61,11 @@ const SettingsModal = ({
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div
+        className={`modal-content direction-${direction}`}
+        dir={direction}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="modal-header">
           <h2>Settings</h2>
           <button className="close-btn" onClick={onClose} title="Close">
@@ -93,7 +104,7 @@ const SettingsModal = ({
                   onClick={() =>
                     onUpdateSettings(
                       "fontSize",
-                      Math.max(12, settings.fontSize - 1)
+                      Math.max(12, settings.fontSize - 1),
                     )
                   }
                   className="size-btn"
@@ -113,7 +124,7 @@ const SettingsModal = ({
                   onClick={() =>
                     onUpdateSettings(
                       "fontSize",
-                      Math.min(24, settings.fontSize + 1)
+                      Math.min(24, settings.fontSize + 1),
                     )
                   }
                   className="size-btn"
@@ -153,6 +164,24 @@ const SettingsModal = ({
                   {LINE_HEIGHTS.map((lh) => (
                     <option key={lh.id} value={lh.id}>
                       {lh.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="setting-row">
+              <label>Direction</label>
+              <div className="select-wrapper">
+                <select
+                  value={settings.textDirection || "auto"}
+                  onChange={(e) =>
+                    onUpdateSettings("textDirection", e.target.value)
+                  }
+                >
+                  {DIRECTIONS.map((d) => (
+                    <option key={d.id} value={d.id}>
+                      {d.name}
                     </option>
                   ))}
                 </select>

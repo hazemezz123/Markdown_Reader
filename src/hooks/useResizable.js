@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-export function useResizable(isPreviewMode) {
+export function useResizable(isPreviewMode, direction = "ltr") {
   const splitPaneRef = useRef(null);
   const editorPaneRef = useRef(null);
   const previewPaneRef = useRef(null);
@@ -30,7 +30,9 @@ export function useResizable(isPreviewMode) {
       if (isResizing && splitPaneRef.current) {
         const paneRect = splitPaneRef.current.getBoundingClientRect();
         const offsetX = mouseMoveEvent.clientX - paneRect.left;
-        const newWidth = (offsetX / paneRect.width) * 100;
+        const logicalOffsetX =
+          direction === "rtl" ? paneRect.width - offsetX : offsetX;
+        const newWidth = (logicalOffsetX / paneRect.width) * 100;
 
         if (newWidth >= 20 && newWidth <= 80) {
           widthRef.current = newWidth;
@@ -44,7 +46,7 @@ export function useResizable(isPreviewMode) {
         }
       }
     },
-    [isResizing]
+    [isResizing, direction],
   );
 
   useEffect(() => {

@@ -7,7 +7,7 @@ import { dracula } from "@uiw/codemirror-theme-dracula";
 import { solarizedLight, solarizedDark } from "@uiw/codemirror-theme-solarized";
 
 const MarkdownEditor = React.forwardRef(
-  ({ content, onChange, theme, settings }, ref) => {
+  ({ content, onChange, theme, settings, direction = "ltr" }, ref) => {
     const {
       fontSize = 16,
       fontFamily = "mono",
@@ -46,7 +46,7 @@ const MarkdownEditor = React.forwardRef(
     };
 
     return (
-      <div className="editor-container" ref={ref}>
+      <div className="editor-container" ref={ref} dir={direction}>
         <CodeMirror
           value={content}
           height="100%"
@@ -56,7 +56,7 @@ const MarkdownEditor = React.forwardRef(
           ]}
           onChange={(value) => onChange(value)}
           basicSetup={{
-            lineNumbers: true,
+            lineNumbers: showLineNumbers,
             foldGutter: false,
             highlightActiveLine: true,
             autocompletion: true,
@@ -64,6 +64,8 @@ const MarkdownEditor = React.forwardRef(
           style={{
             fontSize: `${fontSize}px`,
             fontFamily: getFontFamily(fontFamily),
+            direction,
+            textAlign: "start",
           }}
           className="codemirror-wrapper"
         />
@@ -102,7 +104,7 @@ const MarkdownEditor = React.forwardRef(
       `}</style>
       </div>
     );
-  }
+  },
 );
 
 export default React.memo(MarkdownEditor);

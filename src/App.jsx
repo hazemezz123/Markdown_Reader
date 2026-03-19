@@ -22,11 +22,21 @@ const DEFAULT_SETTINGS = {
   fontSize: 16,
   lineHeight: "1.7",
   fontFamily: "sans",
+  textDirection: "auto",
   autoSave: true,
   smoothAnimations: true,
   showFooter: true,
   showLineNumbers: true,
   scrollSync: true,
+};
+
+const RTL_CHAR_REGEX =
+  /[\u0590-\u05FF\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF]/;
+
+const getEffectiveDirection = (content = "", preference = "auto") => {
+  if (preference === "rtl") return "rtl";
+  if (preference === "ltr") return "ltr";
+  return RTL_CHAR_REGEX.test(content) ? "rtl" : "ltr";
 };
 
 function App() {
@@ -36,14 +46,20 @@ function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [settings, setSettings] = useLocalStorage(
     "markdown-reader-settings",
-    DEFAULT_SETTINGS
+    DEFAULT_SETTINGS,
   );
   const [files, setFiles] = useLocalStorage("markdown-reader-files", [
     INITIAL_FILE,
   ]);
   const [activeFileId, setActiveFileId] = useLocalStorage(
     "markdown-reader-active-id",
-    null
+    null,
+  );
+
+  const activeFile = files.find((f) => f.id === activeFileId);
+  const effectiveDirection = getEffectiveDirection(
+    activeFile?.content,
+    settings.textDirection,
   );
 
   // --- RESIZING HOOK ---
@@ -54,7 +70,7 @@ function App() {
     editorWidth,
     isResizing,
     startResizing,
-  } = useResizable(isPreviewMode);
+  } = useResizable(isPreviewMode, effectiveDirection);
 
   // --- EFFECTS ---
   // --- REFS ---
@@ -68,6 +84,12 @@ function App() {
     document.body.className = "";
     document.body.setAttribute("data-theme", theme);
   }, [theme]);
+
+  // Direction application
+  useEffect(() => {
+    document.documentElement.setAttribute("dir", effectiveDirection);
+    document.body.setAttribute("dir", effectiveDirection);
+  }, [effectiveDirection]);
 
   // Ensure active file logic
   useEffect(() => {
@@ -121,17 +143,18 @@ function App() {
     setFiles(files.map((f) => (f.id === id ? { ...f, name: n } : f)));
   const handleUpdateContent = (c) =>
     setFiles(
-      files.map((f) => (f.id === activeFileId ? { ...f, content: c } : f))
+      files.map((f) => (f.id === activeFileId ? { ...f, content: c } : f)),
     );
-
-  const activeFile = files.find((f) => f.id === activeFileId);
 
   const updateSettings = (key, value) => {
     setSettings((prev) => ({ ...prev, [key]: value }));
   };
 
   return (
-    <div className={`app-container ${isPreviewMode ? "preview-mode" : ""}`}>
+    <div
+      className={`app-container ${isPreviewMode ? "preview-mode" : ""} dir-${effectiveDirection}`}
+      dir={effectiveDirection}
+    >
       <div className="sidebar-wrapper">
         <Sidebar
           files={files}
@@ -170,6 +193,7 @@ function App() {
               isOpen={isSettingsOpen}
               onClose={() => setIsSettingsOpen(false)}
               settings={settings}
+              direction={effectiveDirection}
               onUpdateSettings={updateSettings}
               currentTheme={theme}
               onThemeChange={setTheme}
@@ -196,6 +220,7 @@ function App() {
                 onChange={handleUpdateContent}
                 theme={theme}
                 settings={settings}
+                direction={effectiveDirection}
               />
             </div>
 
@@ -215,6 +240,7 @@ function App() {
                 ref={previewRef}
                 content={activeFile.content}
                 settings={settings}
+                direction={effectiveDirection}
               />
             </div>
           </div>

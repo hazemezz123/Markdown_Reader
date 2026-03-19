@@ -2,7 +2,7 @@
   height: 100%;
   padding: 2rem;
   overflow-y: auto;
-  border-left: 1px solid var(--color-border);
+  border-inline-start: 1px solid var(--color-border);
 }
 .markdown-content {
   /* Font family, line height, font size are set via inline styles in JS */
@@ -37,15 +37,15 @@
 .markdown-content ul,
 .markdown-content ol {
   margin-bottom: 1.5rem;
-  padding-left: 1.5rem;
+  padding-inline-start: 1.5rem;
 }
 .markdown-content li {
   margin-bottom: 0.5rem;
 }
 .markdown-content blockquote {
-  border-left: 4px solid var(--color-border);
-  padding-left: 1rem;
-  margin-left: 0;
+  border-inline-start: 4px solid var(--color-border);
+  padding-inline-start: 1rem;
+  margin-inline-start: 0;
   margin-bottom: 1.5rem;
   font-style: italic;
   color: var(--color-muted-text);
@@ -70,6 +70,13 @@
 .markdown-content pre code {
   background-color: transparent;
   padding: 0;
+}
+
+.markdown-content pre,
+.markdown-content code {
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
 }
 .markdown-content a {
   color: inherit;

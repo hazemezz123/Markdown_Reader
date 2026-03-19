@@ -1,7 +1,7 @@
 .sidebar {
   width: 250px;
   height: 100vh;
-  border-right: 1px solid var(--color-border);
+  border-inline-end: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   background-color: var(--color-bg);
@@ -41,18 +41,18 @@
   align-items: center;
   cursor: pointer;
   transition: background-color 0.1s;
-  border-left: 3px solid transparent;
+  border-inline-start: 3px solid transparent;
 }
 .file-item:hover {
   background-color: var(--color-hover);
 }
 .file-item.active {
   background-color: var(--color-hover);
-  border-left-color: var(--color-text);
+  border-inline-start-color: var(--color-text);
   font-weight: 500;
 }
 .file-icon {
-  margin-right: 0.75rem;
+  margin-inline-end: 0.75rem;
   display: flex;
   align-items: center;
 }
@@ -81,7 +81,9 @@
   padding: 4px;
   border-radius: 4px;
   color: var(--color-text);
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 .action-btn:hover {
   background-color: var(--color-hover);
